@@ -1,9 +1,16 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import orders from "../data/orders.json"
+import {useGetOrdersUserQuery} from "../services/orders"
 import OrderItem from '../components/OrderItem'
+import { useSelector } from 'react-redux'
+import EmptyList from "../components/EmptyList"
 
 const Orders = () => {
  
+  const localId = useSelector(state => state.user.localId)
+  const {data:orders} = useGetOrdersUserQuery({localId})
+
+  if(!orders) return <EmptyList message="No hay ordenes"/>
+
   return (
     <View>
       <FlatList

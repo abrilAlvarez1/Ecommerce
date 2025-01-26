@@ -6,13 +6,13 @@ import { useSelector } from 'react-redux';
 
 const CartItem = ({product}) => {
 
-    const {description,title, price} = product
-   // const localId = useSelector(state => state.user.localId)
-    const [triggerDeleteItemCart] = useDeleteCartProductMutation()
+    const {description,title, price, quantity} = product
+    const localId = useSelector( state => state.user.localId)
+    const [triggerDeleteCartItem] = useDeleteCartProductMutation()
 
-    /*const deleteCartProduct = () => {
-        triggerDeleteItemCart({localId,productId:product.id})
-    }*/
+    const deleteCartProduct = () => {
+        triggerDeleteCartItem({localId,productId:product.id})
+    }
 
     return (
         <View style={styles.container}>
@@ -21,10 +21,10 @@ const CartItem = ({product}) => {
             <Text style={styles.description}>{description}</Text>
             <View style={styles.containerText}>
                 <Text style={styles.text}>Precio: {price}$  ARG</Text>
-                <Text style={styles.text}>Cantidad: 1</Text>
+                <Text style={styles.text}>Cantidad: {quantity}</Text>
             </View>
           </View>
-          <Pressable >
+          <Pressable onPress={deleteCartProduct} >
           <Ionicons style={styles.icon} name="trash-outline" size={24} color="black" />
           </Pressable>
           

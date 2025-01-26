@@ -2,10 +2,10 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ArrowGoBack from './ArrowBack'
 import { colors } from '../global/colors'
-import ButtonCart from './ButtonCart'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import {deleteSesion} from "../config/dbSqlLite"
+import { deleteUser } from '../features/userSlice'
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const Header = ({title, showGoBack}) => {

@@ -7,7 +7,7 @@ import { useGetProductsQuery } from '../services/shop'
 const ProductsByCategory = ({route}) => {
 
   const {item:category} = route.params
-  const {data,isSuccess,isError,error,isLoading} = useGetProductsQuery(category)
+  const {data,isSuccess,isError,error} = useGetProductsQuery(category)
   const [keyword,setKeyword] = useState("")
   const [products,setProducts] = useState([])
 
@@ -25,7 +25,7 @@ const ProductsByCategory = ({route}) => {
 
   },[keyword,isSuccess])
 
-  if(isLoading) return <View><Text>cargando</Text></View>
+
   if(isError) return <View><Text>{error.message}</Text></View>
 
   return (
@@ -43,10 +43,5 @@ const ProductsByCategory = ({route}) => {
 export default ProductsByCategory
 
 const styles = StyleSheet.create({
-  container:{
 
-  },
-  text:{
-    color: "white"
-  }
 })

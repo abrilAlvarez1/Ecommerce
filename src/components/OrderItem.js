@@ -1,17 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { colors } from '../global/colors'
+import { useNavigation } from '@react-navigation/native';
 
 const OrderItem = ({order}) => {
-    const {createDate, total, id} = order
+
+    const {createDate, total} = order
+    const navigation = useNavigation()
+
   return (
     <View style={styles.container}>
         <View style={styles.content}>
-        <Text style={styles.text}>{id}</Text>
-        <Text style={styles.text}>{createDate}</Text>
-        <Text style={styles.Text}>{total}</Text>
+        <Text style={styles.text}>Date: {createDate}</Text>
+        <Text style={styles.Text}>Total: {total}$ ARS</Text>
         </View>
-        <AntDesign name="eyeo" size={24} color="black" />
+        <Pressable onPress={() =>{navigation.navigate("OrderDetails",{order})}}>
+            <AntDesign name="eyeo" size={24} color="black" />
+            
+        </Pressable>
+        
     </View>
   )
 }

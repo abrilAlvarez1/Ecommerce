@@ -1,4 +1,4 @@
-import * as SQLiteDatabase  from "expo-sqlite";
+import * as SQLite from "expo-sqlite"
 
 export const init = async () => {
     try {

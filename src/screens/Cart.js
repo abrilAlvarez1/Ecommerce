@@ -4,33 +4,46 @@ import CartItem from '../components/CartItem'
 import { colors } from '../global/colors'
 import { usePostOrdersMutation } from "../services/orders"
 import { useSelector } from 'react-redux'
-import { useGetCartQuery, usePostCartMutation } from '../services/cart'
+import { useGetCartQuery, useDeleteCartMutation } from '../services/cart'
 import { useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import EmptyList from "../components/EmptyList"
 
 const Cart = () => {
 
+  const navigation = useNavigation()
   const [triggerPost] = usePostOrdersMutation()
+  const [triggerDeleteCart] = useDeleteCartMutation()
   const localId = useSelector(state => state.user.localId)
-  const [data] = useGetCartQuery({localId})
+  const {data:cart} = useGetCartQuery({localId})
   const [total, setTotal] = useState(0)
   
 
   useEffect(() => {
-    if (data) {
-      setTotal(data.reduce((acc, item) => acc + item.price * item.quantity, 0));
-    }else{
-      setTotal(data)
+    if (cart) {
+      setTotal(cart.reduce((acc, item) => acc + item.price * item.quantit, 0));
+
     }
-  }, [data])
+  }, [cart])
 
   const confirmCart = () => {
-    triggerPost({ id: "2", products: [{ id: "1" }], total: 100 });
+    const createDate = new Date().toLocaleString()
+    const order = {
+      products:cart,
+      createDate,
+      total
+    }
+    triggerPost({order,localId})
+    triggerDeleteCart({localId})
+    navigation.navigate("OrdersStack")
   }
+
+  if(!cart) return <EmptyList message="Carrito vacio"/>
 
   return (
     <View style={styles.container}>
       <FlatList
-      data={data}
+      data={cart}
       keyExtractor={item => item.id}
       renderItem={({item}) => <CartItem product={item}/>}
       />

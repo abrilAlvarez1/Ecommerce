@@ -8,13 +8,9 @@ import { useSelector } from 'react-redux'
 
 const MyProfile = () => {
 
-   // const localId = useSelector(state => state.auth.localId)
     const navigation = useNavigation()
     const localId = useSelector(state => state.user.localId)
-    const {data:user,isLoading} = useGetUserQuery({localId})
-
-
-    if(isLoading) return <View><Text>Cargando</Text></View>
+    const {data:user} = useGetUserQuery({localId})
 
   return (
     <View style={styles.container}>
@@ -47,7 +43,7 @@ const styles = StyleSheet.create({
     imageContainer:{
       width:150,
       height:150,
-      borderRadius:"50%",
+      //borderRadius:"50%",
       overflow:"hidden"
     }
 })

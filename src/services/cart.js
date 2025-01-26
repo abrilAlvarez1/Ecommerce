@@ -8,13 +8,18 @@ export const cartAPI = createApi({
     endpoints:(builder)=> ({
         getCart:builder.query({
             query:({localId}) => `carts/${localId}.json`,
-            transformErrorResponse:(response) => {
+            transformResponse:(response) => {
                 if(!response){
                     return null
                 }
-                const data = Object.entries(response).map(item => ({...item[1],id:item[0]}))
+                const entriesWithIds = Object.entries(response).map(item => ({...item[1],id:item[0]}))
+                const data = entriesWithIds.filter(item => item !== null)                
                 return data
             },
+            providesTags:["addProduct", "deleteProduct"]
+        }),
+        getProductCart:builder.query({
+            query:({localId,productId}) => `carts/${localId}/${productId}.json`,
             providesTags:["addProduct", "deleteProduct"]
         }),
         postCart:builder.mutation({
@@ -26,16 +31,27 @@ export const cartAPI = createApi({
             invalidatesTags:["addProduct"]
         }),
         deleteCartProduct:builder.mutation({
-            query:({localId}) => ({
-                url:`carts/${localId}.json`,
+            query:({localId, productId}) => ({
+                url:`carts/${localId}/${productId}.json`,
                 method:"DELETE"
             }),
             invalidatesTags:["deleteProduct"]
+        }),
+        deleteCart:builder.mutation({
+            query:({localId})=> ({
+                url:`carts/${localId}.json`,
+                method:"DELETE",
+            }),
+            invalidatesTags:["deleteProduct"]
         })
+
     })
 })
 
-export const { useGetCartQuery, 
+export const { 
+    useGetCartQuery, 
     usePostCartMutation,
     useDeleteCartProductMutation,
+    useDeleteCartMutation,
+    useGetProductCartQuery
 } = cartAPI

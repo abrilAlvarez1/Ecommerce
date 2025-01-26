@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useLoginMutation } from '../services/auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../features/userSlice'
-import {loginSchema} from "../validations/loginSchema"
+import { loginSchema } from '../validations/loginSchema'
 
 const Login = () => {
 
@@ -21,8 +21,7 @@ const Login = () => {
 
     const onSubmit = async () => {
         try{
-            //loginSchema.validateSync({ email, password })
-            console.log("loginSchema:", loginSchema);
+            loginSchema.validateSync({ email, password })
             const response = await triggerLogin({email, password})
             console.log("Login response:", response);
             
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
     },
     container:{
         width:"90%",
-        backgroundColor: "blue",
+        backgroundColor: colors.second,
         gap:15,
         borderRadius:10,
         justifyContent:"center",
