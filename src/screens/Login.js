@@ -33,6 +33,7 @@ const Login = () => {
             dispatch(setUser(user))
             await deleteSesion()
             await insertSession(user.localId,user.email,user.idToken)
+            
         }
         catch (error){
             console.log("Validation error:", error);

@@ -15,7 +15,7 @@ const OrderDetails = () => {
       <Text>Productos:</Text>
         {order.products.map((item) => (
           <View key={item.id} style={styles.productContainer}>
-            <Text style={styles.text}>Nombre: {item.title}</Text>
+            <Text style={styles.text}> {item.title}</Text>
             <Text>Precio: ${item.price} ARS</Text>
           </View>
         ))}
